@@ -88,7 +88,7 @@ CREATE TABLE `typecho_contents` (
   PRIMARY KEY (`cid`),
   UNIQUE KEY `slug` (`slug`),
   KEY `created` (`created`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `typecho_contents` (
 
 LOCK TABLES `typecho_contents` WRITE;
 /*!40000 ALTER TABLE `typecho_contents` DISABLE KEYS */;
-INSERT INTO `typecho_contents` VALUES (3,'1796578910.jpeg','1796578910-jpeg',1553481552,1553481552,'a:5:{s:4:\"name\";s:15:\"1796578910.jpeg\";s:4:\"path\";s:36:\"/usr/uploads/2019/03/2311125299.jpeg\";s:4:\"size\";i:144007;s:4:\"type\";s:4:\"jpeg\";s:4:\"mime\";s:10:\"image/jpeg\";}',1,1,NULL,'attachment','publish',NULL,0,'1','0','1',4),(2,'关于','start-page',1553479513,1553479513,'<!--markdown-->本页面由 Typecho 创建, 这只是个测试页面.',0,1,NULL,'page','publish',NULL,0,'1','1','1',0),(4,'mariadb安装与配置','4',1553481540,1553483970,'<!--markdown--> - **安装**\r\n\r\n同时安装mariadb服务器和客户端（mycli也支持mariadb）\r\n\r\n      #sudo pacman -S mariadb mycli\r\n\r\n - **配置**\r\n\r\n先初始化\r\n\r\n      #sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql\r\n允许开机启动和启动mariadb\r\n\r\n      #sudo systemctl enable mariadb\r\n      #sudo systemctl start mariadb\r\n\r\n配置root账户，一路回车和按提示输入密码\r\n\r\n      #mysql_secure_installation\r\n\r\n\r\n使用root账户登录\r\n\r\n      #mysql -u root -p\r\n\r\n创建新用户和授予全部权限并更新用户授权\r\n\r\n      >create user \'yi\'@\'localhost\' identified by \'1\';\r\n      >grant all privileges on *.* to yi@localhost identified by \'1\';\r\n      >flush privileges;\r\n\r\n - **常用命令**\r\n\r\n修改密码\r\n\r\n      >set password for \'yi\'@\'localhost\'=Password(\'1\');\r\n\r\n创建数据库\r\n\r\n      >create database demo;\r\n\r\n显示所用数据库和表格（先选中数据库）\r\n\r\n      >show databases;\r\n      >use demo;\r\n      >show tables;\r\n\r\n显示数据库表结构\r\n\r\n      >describe demo;\r\n\r\n删除表格和数据库\r\n\r\n      >drop database demo;\r\n      >drop table table1;\r\n\r\n备份和还原\r\n\r\n      #mysqldump -uyi -p\'1\' -B typecho > typecho_bak.sql\r\n      #mysql -uyi -p\'1\' < typecho_bak.sql\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0);
+INSERT INTO `typecho_contents` VALUES (3,'1796578910.jpeg','1796578910-jpeg',1553481552,1553481552,'a:5:{s:4:\"name\";s:15:\"1796578910.jpeg\";s:4:\"path\";s:36:\"/usr/uploads/2019/03/2311125299.jpeg\";s:4:\"size\";i:144007;s:4:\"type\";s:4:\"jpeg\";s:4:\"mime\";s:10:\"image/jpeg\";}',1,1,NULL,'attachment','publish',NULL,0,'1','0','1',4),(2,'关于','start-page',1553479513,1553479513,'<!--markdown-->本页面由 Typecho 创建, 这只是个测试页面.',0,1,NULL,'page','publish',NULL,0,'1','1','1',0),(4,'mariadb安装与配置','4',1553481540,1553483970,'<!--markdown--> - **安装**\r\n\r\n同时安装mariadb服务器和客户端（mycli也支持mariadb）\r\n\r\n      #sudo pacman -S mariadb mycli\r\n\r\n - **配置**\r\n\r\n先初始化\r\n\r\n      #sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql\r\n允许开机启动和启动mariadb\r\n\r\n      #sudo systemctl enable mariadb\r\n      #sudo systemctl start mariadb\r\n\r\n配置root账户，一路回车和按提示输入密码\r\n\r\n      #mysql_secure_installation\r\n\r\n\r\n使用root账户登录\r\n\r\n      #mysql -u root -p\r\n\r\n创建新用户和授予全部权限并更新用户授权\r\n\r\n      >create user \'yi\'@\'localhost\' identified by \'1\';\r\n      >grant all privileges on *.* to yi@localhost identified by \'1\';\r\n      >flush privileges;\r\n\r\n - **常用命令**\r\n\r\n修改密码\r\n\r\n      >set password for \'yi\'@\'localhost\'=Password(\'1\');\r\n\r\n创建数据库\r\n\r\n      >create database demo;\r\n\r\n显示所用数据库和表格（先选中数据库）\r\n\r\n      >show databases;\r\n      >use demo;\r\n      >show tables;\r\n\r\n显示数据库表结构\r\n\r\n      >describe demo;\r\n\r\n删除表格和数据库\r\n\r\n      >drop database demo;\r\n      >drop table table1;\r\n\r\n备份和还原\r\n\r\n      #mysqldump -uyi -p\'1\' -B typecho > typecho_bak.sql\r\n      #mysql -uyi -p\'1\' < typecho_bak.sql\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0),(5,'debian9配置nginx建立typecho个人博客','5',1553594269,1553594269,'<!--markdown--> - **配置数据库**\r\n\r\n安装MySQL或mariadb，建立typecho的专用账户和数据库\r\n例如创建yi用户和新建typecho数据库\r\n\r\n    # mysql -u root -p //使用root账户登录mysql\r\n    > grant all privileges on *.* to yi@localhost identified by \'1\'; //创建yi用户并授予全部权限\r\n    > create database typecho; //创建数据库typecho\r\n\r\n - **配置php**\r\n\r\ntypecho要php环境来支持，安装php，修改php.ini开启mysql支持\r\n\r\n    # sudo apt install php php-mysql\r\n    # sudo vim /etc/php/7.0/fpm/php.ini\r\n\r\n启动php-fpm\r\n\r\n    # sudo php-fpm7.0\r\n    # sudo mkdir /run/php //如果提示找不到目录就执行此句\r\n\r\n - **配置nginx**\r\n\r\n安装nginx，修改nginx用户组，开启php支持\r\n\r\n    # sudo apt install nginx\r\n    # sudo vim /etc/nginx/nginx.conf\r\n    # sudo vim /etc/nginx/sites-available/default\r\n\r\n把typecho放到nginx的web目录下面\r\n\r\n    # sudo cp * /var/www/html\r\n\r\n启动nginx服务\r\n\r\n    # sudo service nginx start\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0);
 /*!40000 ALTER TABLE `typecho_contents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -127,7 +127,7 @@ CREATE TABLE `typecho_fields` (
 
 LOCK TABLES `typecho_fields` WRITE;
 /*!40000 ALTER TABLE `typecho_fields` DISABLE KEYS */;
-INSERT INTO `typecho_fields` VALUES (4,'picUrl','str','http://127.0.0.1/usr/uploads/2019/03/2311125299.jpeg',0,0),(4,'description','str','',0,0);
+INSERT INTO `typecho_fields` VALUES (4,'picUrl','str','http://127.0.0.1/usr/uploads/2019/03/2311125299.jpeg',0,0),(4,'description','str','',0,0),(5,'picUrl','str','',0,0),(5,'description','str','debian9 typecho mysql nginx mariadb/mysql',0,0);
 /*!40000 ALTER TABLE `typecho_fields` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,7 +158,7 @@ CREATE TABLE `typecho_metas` (
 
 LOCK TABLES `typecho_metas` WRITE;
 /*!40000 ALTER TABLE `typecho_metas` DISABLE KEYS */;
-INSERT INTO `typecho_metas` VALUES (1,'默认分类','default','category','只是一个默认分类',1,1,0);
+INSERT INTO `typecho_metas` VALUES (1,'默认分类','default','category','只是一个默认分类',2,1,0);
 /*!40000 ALTER TABLE `typecho_metas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +207,7 @@ CREATE TABLE `typecho_relationships` (
 
 LOCK TABLES `typecho_relationships` WRITE;
 /*!40000 ALTER TABLE `typecho_relationships` DISABLE KEYS */;
-INSERT INTO `typecho_relationships` VALUES (4,1);
+INSERT INTO `typecho_relationships` VALUES (4,1),(5,1);
 /*!40000 ALTER TABLE `typecho_relationships` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +242,7 @@ CREATE TABLE `typecho_users` (
 
 LOCK TABLES `typecho_users` WRITE;
 /*!40000 ALTER TABLE `typecho_users` DISABLE KEYS */;
-INSERT INTO `typecho_users` VALUES (1,'admin','$P$BWm/VWYtsgEaJECXDKlSBhKEI673Px.','llfcjyy@outlook.com','http://www.typecho.org','admin',1553479513,1553591660,1553483974,'administrator','fc01137a5e57a8e2e8b6fd0fa651cc1e');
+INSERT INTO `typecho_users` VALUES (1,'admin','$P$BWm/VWYtsgEaJECXDKlSBhKEI673Px.','llfcjyy@outlook.com','http://www.typecho.org','admin',1553479513,1553594281,1553483974,'administrator','fc01137a5e57a8e2e8b6fd0fa651cc1e');
 /*!40000 ALTER TABLE `typecho_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -255,4 +255,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-26 17:14:41
+-- Dump completed on 2019-03-26 17:58:34
