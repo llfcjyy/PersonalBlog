@@ -27,27 +27,6 @@ __TYPECHO_ROOT_DIR__ . __TYPECHO_PLUGIN_DIR__);
 /** 载入API支持 */
 require_once 'Typecho/Common.php';
 
-/** 载入Response支持 */
-require_once 'Typecho/Response.php';
-
-/** 载入配置支持 */
-require_once 'Typecho/Config.php';
-
-/** 载入异常支持 */
-require_once 'Typecho/Exception.php';
-
-/** 载入插件支持 */
-require_once 'Typecho/Plugin.php';
-
-/** 载入国际化支持 */
-require_once 'Typecho/I18n.php';
-
-/** 载入数据库支持 */
-require_once 'Typecho/Db.php';
-
-/** 载入路由器支持 */
-require_once 'Typecho/Router.php';
-
 /** 程序初始化 */
 Typecho_Common::init();
 
@@ -60,5 +39,6 @@ $db->addServer(array (
   'charset' => 'utf8',
   'port' => '3306',
   'database' => 'typecho',
+  'engine' => 'InnoDB',
 ), Typecho_Db::READ | Typecho_Db::WRITE);
 Typecho_Db::set($db);
