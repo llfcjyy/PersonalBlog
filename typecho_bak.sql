@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.37-MariaDB, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.17  Distrib 10.3.13-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: typecho
 -- ------------------------------------------------------
--- Server version	10.1.37-MariaDB-0+deb9u1
+-- Server version	10.3.13-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,19 +32,19 @@ DROP TABLE IF EXISTS `typecho_comments`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `typecho_comments` (
   `coid` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `cid` int(10) unsigned DEFAULT '0',
-  `created` int(10) unsigned DEFAULT '0',
+  `cid` int(10) unsigned DEFAULT 0,
+  `created` int(10) unsigned DEFAULT 0,
   `author` varchar(200) DEFAULT NULL,
-  `authorId` int(10) unsigned DEFAULT '0',
-  `ownerId` int(10) unsigned DEFAULT '0',
+  `authorId` int(10) unsigned DEFAULT 0,
+  `ownerId` int(10) unsigned DEFAULT 0,
   `mail` varchar(200) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
   `ip` varchar(64) DEFAULT NULL,
   `agent` varchar(511) DEFAULT NULL,
-  `text` text,
+  `text` text DEFAULT NULL,
   `type` varchar(16) DEFAULT 'comment',
   `status` varchar(16) DEFAULT 'approved',
-  `parent` int(10) unsigned DEFAULT '0',
+  `parent` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`coid`),
   KEY `cid` (`cid`),
   KEY `created` (`created`)
@@ -71,24 +71,24 @@ CREATE TABLE `typecho_contents` (
   `cid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(200) DEFAULT NULL,
   `slug` varchar(200) DEFAULT NULL,
-  `created` int(10) unsigned DEFAULT '0',
-  `modified` int(10) unsigned DEFAULT '0',
-  `text` longtext,
-  `order` int(10) unsigned DEFAULT '0',
-  `authorId` int(10) unsigned DEFAULT '0',
+  `created` int(10) unsigned DEFAULT 0,
+  `modified` int(10) unsigned DEFAULT 0,
+  `text` longtext DEFAULT NULL,
+  `order` int(10) unsigned DEFAULT 0,
+  `authorId` int(10) unsigned DEFAULT 0,
   `template` varchar(32) DEFAULT NULL,
   `type` varchar(16) DEFAULT 'post',
   `status` varchar(16) DEFAULT 'publish',
   `password` varchar(32) DEFAULT NULL,
-  `commentsNum` int(10) unsigned DEFAULT '0',
+  `commentsNum` int(10) unsigned DEFAULT 0,
   `allowComment` char(1) DEFAULT '0',
   `allowPing` char(1) DEFAULT '0',
   `allowFeed` char(1) DEFAULT '0',
-  `parent` int(10) unsigned DEFAULT '0',
+  `parent` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`cid`),
   UNIQUE KEY `slug` (`slug`),
   KEY `created` (`created`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,7 +97,7 @@ CREATE TABLE `typecho_contents` (
 
 LOCK TABLES `typecho_contents` WRITE;
 /*!40000 ALTER TABLE `typecho_contents` DISABLE KEYS */;
-INSERT INTO `typecho_contents` VALUES (3,'1796578910.jpeg','1796578910-jpeg',1553481552,1553481552,'a:5:{s:4:\"name\";s:15:\"1796578910.jpeg\";s:4:\"path\";s:36:\"/usr/uploads/2019/03/2311125299.jpeg\";s:4:\"size\";i:144007;s:4:\"type\";s:4:\"jpeg\";s:4:\"mime\";s:10:\"image/jpeg\";}',1,1,NULL,'attachment','publish',NULL,0,'1','0','1',4),(2,'关于','start-page',1553479513,1553479513,'<!--markdown-->本页面由 Typecho 创建, 这只是个测试页面.',0,1,NULL,'page','publish',NULL,0,'1','1','1',0),(4,'mariadb安装与配置','4',1553481540,1553483970,'<!--markdown--> - **安装**\r\n\r\n同时安装mariadb服务器和客户端（mycli也支持mariadb）\r\n\r\n      #sudo pacman -S mariadb mycli\r\n\r\n - **配置**\r\n\r\n先初始化\r\n\r\n      #sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql\r\n允许开机启动和启动mariadb\r\n\r\n      #sudo systemctl enable mariadb\r\n      #sudo systemctl start mariadb\r\n\r\n配置root账户，一路回车和按提示输入密码\r\n\r\n      #mysql_secure_installation\r\n\r\n\r\n使用root账户登录\r\n\r\n      #mysql -u root -p\r\n\r\n创建新用户和授予全部权限并更新用户授权\r\n\r\n      >create user \'yi\'@\'localhost\' identified by \'1\';\r\n      >grant all privileges on *.* to yi@localhost identified by \'1\';\r\n      >flush privileges;\r\n\r\n - **常用命令**\r\n\r\n修改密码\r\n\r\n      >set password for \'yi\'@\'localhost\'=Password(\'1\');\r\n\r\n创建数据库\r\n\r\n      >create database demo;\r\n\r\n显示所用数据库和表格（先选中数据库）\r\n\r\n      >show databases;\r\n      >use demo;\r\n      >show tables;\r\n\r\n显示数据库表结构\r\n\r\n      >describe demo;\r\n\r\n删除表格和数据库\r\n\r\n      >drop database demo;\r\n      >drop table table1;\r\n\r\n备份和还原\r\n\r\n      #mysqldump -uyi -p\'1\' -B typecho > typecho_bak.sql\r\n      #mysql -uyi -p\'1\' < typecho_bak.sql\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0),(5,'debian9配置nginx建立typecho个人博客','5',1553594269,1553594269,'<!--markdown--> - **配置数据库**\r\n\r\n安装MySQL或mariadb，建立typecho的专用账户和数据库\r\n例如创建yi用户和新建typecho数据库\r\n\r\n    # mysql -u root -p //使用root账户登录mysql\r\n    > grant all privileges on *.* to yi@localhost identified by \'1\'; //创建yi用户并授予全部权限\r\n    > create database typecho; //创建数据库typecho\r\n\r\n - **配置php**\r\n\r\ntypecho要php环境来支持，安装php，修改php.ini开启mysql支持\r\n\r\n    # sudo apt install php php-mysql\r\n    # sudo vim /etc/php/7.0/fpm/php.ini\r\n\r\n启动php-fpm\r\n\r\n    # sudo php-fpm7.0\r\n    # sudo mkdir /run/php //如果提示找不到目录就执行此句\r\n\r\n - **配置nginx**\r\n\r\n安装nginx，修改nginx用户组，开启php支持\r\n\r\n    # sudo apt install nginx\r\n    # sudo vim /etc/nginx/nginx.conf\r\n    # sudo vim /etc/nginx/sites-available/default\r\n\r\n把typecho放到nginx的web目录下面\r\n\r\n    # sudo cp * /var/www/html\r\n\r\n启动nginx服务\r\n\r\n    # sudo service nginx start\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0),(7,'捕获.JPG','捕获-JPG',1554689470,1554689470,'a:5:{s:4:\"name\";s:10:\"捕获.JPG\";s:4:\"path\";s:35:\"/usr/uploads/2019/04/3262146100.jpg\";s:4:\"size\";i:16720;s:4:\"type\";s:3:\"jpg\";s:4:\"mime\";s:10:\"image/jpeg\";}',1,1,NULL,'attachment','publish',NULL,0,'1','0','1',8),(8,'Visual Studio 禁止自动生成 *.VC.db和*.ipch 文件','8',1554689500,1554689500,'<!--markdown-->设置方法：工具–》选项–》文本编辑器–》C/C++–》高级，把回退位置和警告设置为true或者禁用数据库设为true，这样就不会产生那个文件了。\r\n![捕获.JPG][1]\r\n\r\n\r\n  [1]: http://127.0.0.1/usr/uploads/2019/04/3262146100.jpg',0,1,NULL,'post','publish',NULL,0,'1','1','1',0);
+INSERT INTO `typecho_contents` VALUES (3,'1796578910.jpeg','1796578910-jpeg',1553481552,1553481552,'a:5:{s:4:\"name\";s:15:\"1796578910.jpeg\";s:4:\"path\";s:36:\"/usr/uploads/2019/03/2311125299.jpeg\";s:4:\"size\";i:144007;s:4:\"type\";s:4:\"jpeg\";s:4:\"mime\";s:10:\"image/jpeg\";}',1,1,NULL,'attachment','publish',NULL,0,'1','0','1',4),(2,'关于','start-page',1553479513,1553479513,'<!--markdown-->本页面由 Typecho 创建, 这只是个测试页面.',0,1,NULL,'page','publish',NULL,0,'1','1','1',0),(4,'mariadb安装与配置','4',1553481540,1553483970,'<!--markdown--> - **安装**\r\n\r\n同时安装mariadb服务器和客户端（mycli也支持mariadb）\r\n\r\n      #sudo pacman -S mariadb mycli\r\n\r\n - **配置**\r\n\r\n先初始化\r\n\r\n      #sudo mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql\r\n允许开机启动和启动mariadb\r\n\r\n      #sudo systemctl enable mariadb\r\n      #sudo systemctl start mariadb\r\n\r\n配置root账户，一路回车和按提示输入密码\r\n\r\n      #mysql_secure_installation\r\n\r\n\r\n使用root账户登录\r\n\r\n      #mysql -u root -p\r\n\r\n创建新用户和授予全部权限并更新用户授权\r\n\r\n      >create user \'yi\'@\'localhost\' identified by \'1\';\r\n      >grant all privileges on *.* to yi@localhost identified by \'1\';\r\n      >flush privileges;\r\n\r\n - **常用命令**\r\n\r\n修改密码\r\n\r\n      >set password for \'yi\'@\'localhost\'=Password(\'1\');\r\n\r\n创建数据库\r\n\r\n      >create database demo;\r\n\r\n显示所用数据库和表格（先选中数据库）\r\n\r\n      >show databases;\r\n      >use demo;\r\n      >show tables;\r\n\r\n显示数据库表结构\r\n\r\n      >describe demo;\r\n\r\n删除表格和数据库\r\n\r\n      >drop database demo;\r\n      >drop table table1;\r\n\r\n备份和还原\r\n\r\n      #mysqldump -uyi -p\'1\' -B typecho > typecho_bak.sql\r\n      #mysql -uyi -p\'1\' < typecho_bak.sql\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0),(5,'debian9配置nginx建立typecho个人博客','5',1553594269,1553594269,'<!--markdown--> - **配置数据库**\r\n\r\n安装MySQL或mariadb，建立typecho的专用账户和数据库\r\n例如创建yi用户和新建typecho数据库\r\n\r\n    # mysql -u root -p //使用root账户登录mysql\r\n    > grant all privileges on *.* to yi@localhost identified by \'1\'; //创建yi用户并授予全部权限\r\n    > create database typecho; //创建数据库typecho\r\n\r\n - **配置php**\r\n\r\ntypecho要php环境来支持，安装php，修改php.ini开启mysql支持\r\n\r\n    # sudo apt install php php-mysql\r\n    # sudo vim /etc/php/7.0/fpm/php.ini\r\n\r\n启动php-fpm\r\n\r\n    # sudo php-fpm7.0\r\n    # sudo mkdir /run/php //如果提示找不到目录就执行此句\r\n\r\n - **配置nginx**\r\n\r\n安装nginx，修改nginx用户组，开启php支持\r\n\r\n    # sudo apt install nginx\r\n    # sudo vim /etc/nginx/nginx.conf\r\n    # sudo vim /etc/nginx/sites-available/default\r\n\r\n把typecho放到nginx的web目录下面\r\n\r\n    # sudo cp * /var/www/html\r\n\r\n启动nginx服务\r\n\r\n    # sudo service nginx start\r\n',0,1,NULL,'post','publish',NULL,0,'1','1','1',0),(7,'捕获.JPG','捕获-JPG',1554689470,1554689470,'a:5:{s:4:\"name\";s:10:\"捕获.JPG\";s:4:\"path\";s:35:\"/usr/uploads/2019/04/3262146100.jpg\";s:4:\"size\";i:16720;s:4:\"type\";s:3:\"jpg\";s:4:\"mime\";s:10:\"image/jpeg\";}',1,1,NULL,'attachment','publish',NULL,0,'1','0','1',8),(8,'Visual Studio 禁止自动生成 *.VC.db和*.ipch 文件','8',1554689460,1554692488,'<!--markdown-->设置方法：工具–》选项–》文本编辑器–》C/C++–》高级，把回退位置和警告设置为true或者禁用数据库设为true，这样就不会产生那个文件了。\r\n![捕获.JPG][2]\r\n\r\n\r\n  [1]: http://127.0.0.1/usr/uploads/2019/04/1987890955.jpg',0,1,NULL,'post','publish',NULL,0,'1','1','1',0),(11,'timg.jpg','timg-jpg',1554692482,1554692482,'a:5:{s:4:\"name\";s:8:\"timg.jpg\";s:4:\"path\";s:32:\"/usr/uploads/2019/04/8699984.jpg\";s:4:\"size\";i:108053;s:4:\"type\";s:3:\"jpg\";s:4:\"mime\";s:10:\"image/jpeg\";}',2,1,NULL,'attachment','publish',NULL,0,'1','0','1',8);
 /*!40000 ALTER TABLE `typecho_contents` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -112,9 +112,9 @@ CREATE TABLE `typecho_fields` (
   `cid` int(10) unsigned NOT NULL,
   `name` varchar(200) NOT NULL,
   `type` varchar(8) DEFAULT 'str',
-  `str_value` text,
-  `int_value` int(10) DEFAULT '0',
-  `float_value` float DEFAULT '0',
+  `str_value` text DEFAULT NULL,
+  `int_value` int(10) DEFAULT 0,
+  `float_value` float DEFAULT 0,
   PRIMARY KEY (`cid`,`name`),
   KEY `int_value` (`int_value`),
   KEY `float_value` (`float_value`)
@@ -127,7 +127,7 @@ CREATE TABLE `typecho_fields` (
 
 LOCK TABLES `typecho_fields` WRITE;
 /*!40000 ALTER TABLE `typecho_fields` DISABLE KEYS */;
-INSERT INTO `typecho_fields` VALUES (4,'picUrl','str','http://127.0.0.1/usr/uploads/2019/03/2311125299.jpeg',0,0),(4,'description','str','',0,0),(5,'picUrl','str','',0,0),(5,'description','str','debian9 typecho mysql nginx mariadb/mysql',0,0),(8,'picUrl','str','',0,0),(8,'description','str','',0,0);
+INSERT INTO `typecho_fields` VALUES (4,'picUrl','str','http://127.0.0.1/usr/uploads/2019/03/2311125299.jpeg',0,0),(4,'description','str','',0,0),(5,'picUrl','str','',0,0),(5,'description','str','debian9 typecho mysql nginx mariadb/mysql',0,0),(8,'picUrl','str','http://127.0.0.1/usr/uploads/2019/04/8699984.jpg',0,0),(8,'description','str','',0,0);
 /*!40000 ALTER TABLE `typecho_fields` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -144,9 +144,9 @@ CREATE TABLE `typecho_metas` (
   `slug` varchar(200) DEFAULT NULL,
   `type` varchar(32) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
-  `count` int(10) unsigned DEFAULT '0',
-  `order` int(10) unsigned DEFAULT '0',
-  `parent` int(10) unsigned DEFAULT '0',
+  `count` int(10) unsigned DEFAULT 0,
+  `order` int(10) unsigned DEFAULT 0,
+  `parent` int(10) unsigned DEFAULT 0,
   PRIMARY KEY (`mid`),
   KEY `slug` (`slug`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -171,8 +171,8 @@ DROP TABLE IF EXISTS `typecho_options`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `typecho_options` (
   `name` varchar(32) NOT NULL,
-  `user` int(10) unsigned NOT NULL DEFAULT '0',
-  `value` text,
+  `user` int(10) unsigned NOT NULL DEFAULT 0,
+  `value` text DEFAULT NULL,
   PRIMARY KEY (`name`,`user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -225,9 +225,9 @@ CREATE TABLE `typecho_users` (
   `mail` varchar(200) DEFAULT NULL,
   `url` varchar(200) DEFAULT NULL,
   `screenName` varchar(32) DEFAULT NULL,
-  `created` int(10) unsigned DEFAULT '0',
-  `activated` int(10) unsigned DEFAULT '0',
-  `logged` int(10) unsigned DEFAULT '0',
+  `created` int(10) unsigned DEFAULT 0,
+  `activated` int(10) unsigned DEFAULT 0,
+  `logged` int(10) unsigned DEFAULT 0,
   `group` varchar(16) DEFAULT 'visitor',
   `authCode` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`uid`),
@@ -242,7 +242,7 @@ CREATE TABLE `typecho_users` (
 
 LOCK TABLES `typecho_users` WRITE;
 /*!40000 ALTER TABLE `typecho_users` DISABLE KEYS */;
-INSERT INTO `typecho_users` VALUES (1,'admin','$P$BWm/VWYtsgEaJECXDKlSBhKEI673Px.','llfcjyy@outlook.com','http://www.typecho.org','admin',1553479513,1554689503,1554274853,'administrator','58a735cf5268268722752291cd92368a');
+INSERT INTO `typecho_users` VALUES (1,'admin','$P$BWm/VWYtsgEaJECXDKlSBhKEI673Px.','llfcjyy@outlook.com','http://www.typecho.org','admin',1553479513,1554692490,1554689503,'administrator','161c09b605d6cea72ca1ad6b88ec0078');
 /*!40000 ALTER TABLE `typecho_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -255,4 +255,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-08 10:43:02
+-- Dump completed on 2019-04-08 11:01:40
