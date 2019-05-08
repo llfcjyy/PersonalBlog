@@ -31,14 +31,8 @@ require_once 'Typecho/Common.php';
 Typecho_Common::init();
 
 /** 定义数据库参数 */
-$db = new Typecho_Db('Pdo_Mysql', 'typecho_');
+$db = new Typecho_Db('Pdo_SQLite', 'typecho_');
 $db->addServer(array (
-  'host' => 'localhost',
-  'user' => 'yi',
-  'password' => '1',
-  'charset' => 'utf8',
-  'port' => '3306',
-  'database' => 'typecho',
-  'engine' => 'InnoDB',
+  'file' => '/var/www/html/usr/typecho.db',
 ), Typecho_Db::READ | Typecho_Db::WRITE);
 Typecho_Db::set($db);
