@@ -23,9 +23,7 @@ RUN /bin/bash -c '\echo -e "#!/bin/bash\n\
 cd /var/www/\n\
 wget https://codeload.github.com/llfcjyy/PersonalBlog/zip/master -O blog.zip\n\
 unzip blog.zip && rm blog.zip html -r && mv * html\n\
-service php7.0-fpm start\n\
-service nginx start\n\
-tail -f /dev/null" > start-blog.sh;\
+service php7.0-fpm start && service nginx start && tail -f /dev/null" > start-blog.sh;\
 chmod +x start-blog.sh'
 
 EXPOSE 80
