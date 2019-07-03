@@ -9,7 +9,7 @@ deb http://mirrors.163.com/debian/ stretch-backports main non-free contrib\n\
 deb http://mirrors.163.com/debian-security/ stretch/updates main non-free contrib" > /etc/apt/sources.list;\
 apt update;\
 apt upgrade -y;\
-apt install -y sqlite3 php php-fpm php-xml php-sqlite3 nginx wget unzip;\
+apt install -y sqlite3 php php-fpm php-xml php-sqlite3 nginx git;\
 rm /var/lib/apt/lists -r'
 
 RUN /bin/bash -c '\
@@ -19,14 +19,15 @@ sed -i "56,63s/#//" /etc/nginx/sites-available/default;\
 sed -i "62s/^/#&/" /etc/nginx/sites-available/default;\
 sed -i "s#location ~ \\\.php#location ~ \.*\\\.php(\\\/\.*)*#" /etc/nginx/sites-available/default'
 
+RUN /bin/bash -c '\
+rm /var/www/html/*;\
+git clone https://github.com/llfcjyy/PersonalBlog.git /var/www/html/'
+
 RUN /bin/bash -c '\echo -e "#!/bin/bash\n\
-cd /var/www/\n\
-wget https://codeload.github.com/llfcjyy/PersonalBlog/zip/master -O blog.zip\n\
-unzip blog.zip && rm blog.zip html -r && mv * html\n\
+cd /var/www/html && git pull\n\
 service php7.0-fpm start && service nginx start && tail -f /dev/null" > start-blog.sh;\
 chmod +x start-blog.sh'
 
 EXPOSE 80
 
 ENTRYPOINT ["/start-blog.sh"]
-
