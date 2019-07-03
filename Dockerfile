@@ -21,6 +21,8 @@ sed -i "s#location ~ \\\.php#location ~ \.*\\\.php(\\\/\.*)*#" /etc/nginx/sites-
 
 RUN /bin/bash -c '\
 rm /var/www/html/*;\
+git config --global user.email "llfcjyy@gmail.com";\
+git config --global user.name "yi";\
 git clone https://github.com/llfcjyy/PersonalBlog.git /var/www/html/'
 
 RUN /bin/bash -c '\echo -e "#!/bin/bash\n\
