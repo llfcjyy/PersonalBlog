@@ -14,10 +14,14 @@ rm /var/lib/apt/lists -r'
 
 RUN /bin/bash -c '\
 sed -i "s/;extension=php_pdo_sqlite/extension=php_pdo_sqlite/g" /etc/php/7.0/fpm/php.ini;\
-sed -i "s/index.html i/index.php index.html i/g" /etc/nginx/sites-available/default;\
-sed -i "56,63s/#//" /etc/nginx/sites-available/default;\
-sed -i "62s/^/#&/" /etc/nginx/sites-available/default;\
-sed -i "s#location ~ \\\.php#location ~ \.*\\\.php(\\\/\.*)*#" /etc/nginx/sites-available/default'
+sed -i -e "s/index.html i/index.php index.html i/g" \
+-e "56,63s/#//" \
+-e "62s/fast/# fast/" \
+-e "s#location ~ \\\.php#location ~ \.*\\\.php(\\\/\.*)*#" \
+-e "27,28s/# //" \
+-e "28a\	ssl_certificate_key /var/www/html/ssl/swwx.pem;" \
+-e "28a\	ssl_certificate /var/www/html/ssl/swwx.crt;" \
+/etc/nginx/sites-available/default'
 
 RUN /bin/bash -c '\
 rm /var/www/html/*;\
