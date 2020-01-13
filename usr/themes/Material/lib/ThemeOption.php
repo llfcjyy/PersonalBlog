@@ -62,7 +62,7 @@ function themeConfig($form) {
                 $Render->radio("searchis", "搜索设置", NULL, [0 => "Typecho 原生搜索", 1 => "本地搜索（即时搜索）"], 1)
             ).
             $Render->panel("item", "CDN 类型", NULL,
-                $Render->radio("CDNType", "CDN 类型", NULL, [0 => '不启用 CDN', 1 => 'jsDelivr', 2 => '自定义'], 0) .
+                $Render->radio("CDNType", "CDN 类型", NULL, [0 => '不启用 CDN', 1 => 'jsDelivr (cdn.jsdelivr.net)', 3 => 'ElemeCDN (shadow.elemecdn.com)', 2 => '自定义'], 0) .
                 $Render->input("CDNURL", "CDN 地址", "仅在使用自定义 CDN 时需要填写<br>创建一个文件夹，把 <b>css, fonts, img, js</b> 文件夹放进去，上传到到你的 CDN 储存空间根目录下<br />
                 填入你的 CDN 地址, 如 <b>https://cdn.example.com/MaterialCDN</b> 或 <b>https://root.example.com</b>")
             ).
@@ -140,6 +140,9 @@ function themeConfig($form) {
             ).
             $Render->panel("item", "Loading 加载缓冲时间", NULL,
                 $Render->input("loadingbuffer", "Loading 加载缓冲时间", "loading 加载进度条的缓冲时间, 单位为毫秒 ms, 默认为 800ms", 800)
+            ).
+            $Render->panel("item", "文章内容字体大小", NULL,
+                $Render->input("FontSize", "文章内容字体大小", '对应 font-size，单位为 px，各元素将以此为基准计算大小，默认为 15', '15')
             ).
             $Render->panel("item", "搜索框文字颜色", NULL,
                 $Render->input("SearchColor", "搜索框文字颜色", "填入颜色代码，用于适配浅色背景", NULL)
