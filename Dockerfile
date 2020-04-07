@@ -14,6 +14,7 @@ rm /var/lib/apt/lists -r'
 
 RUN /bin/bash -c '\
 sed -i "s/;extension=pdo_sqlite/extension=pdo_sqlite/g" /etc/php/7.3/fpm/php.ini;\
+sed -i "21a\	client_max_body_size 10m;" /etc/nginx/nginx.conf;\
 sed -i -e "s/index.html i/index.php index.html i/g" \
 -e "56,63s/#//" \
 -e "62s/fast/# fast/" \
