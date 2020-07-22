@@ -31,7 +31,7 @@ rm /var/www/html/*;'
 
 RUN /bin/bash -c '\echo -e "#!/bin/bash\n\
 cd /var/www/html\n\
-git pull || git clone https://github.com/llfcjyy/PersonalBlog.git .\n\
+git pull || git clone https://github.com/swwx/PersonalBlog.git .\n\
 chmod 777 usr && chmod 777 usr/typecho.db\n\
 service php7.3-fpm start && service nginx start && tail -f /dev/null" > start-blog.sh;\
 chmod +x start-blog.sh'
